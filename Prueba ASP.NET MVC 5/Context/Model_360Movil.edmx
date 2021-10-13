@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MovilModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="eir_container">
+          <Key>
+            <PropertyRef Name="eir" />
+          </Key>
+          <Property Name="eir" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="contenedor" Type="varchar" MaxLength="20" />
+          <Property Name="sello" Type="varchar" MaxLength="20" />
+          <Property Name="responsable" Type="int" />
+          <Property Name="empresa" Type="int" />
+        </EntityType>
+        <EntityType Name="empresa">
+          <Key>
+            <PropertyRef Name="empresa" />
+          </Key>
+          <Property Name="empresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empresa_nombre" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="responsable">
+          <Key>
+            <PropertyRef Name="reponsable" />
+          </Key>
+          <Property Name="reponsable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="responsable_nombre" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <Association Name="FK_eir_container_empresa">
+          <End Role="empresa" Type="Self.empresa" Multiplicity="0..1" />
+          <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empresa">
+              <PropertyRef Name="empresa" />
+            </Principal>
+            <Dependent Role="eir_container">
+              <PropertyRef Name="empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_eir_container_responsable">
+          <End Role="responsable" Type="Self.responsable" Multiplicity="0..1" />
+          <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="responsable">
+              <PropertyRef Name="reponsable" />
+            </Principal>
+            <Dependent Role="eir_container">
+              <PropertyRef Name="responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovilModelStoreContainer">
+          <EntitySet Name="eir_container" EntityType="Self.eir_container" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="empresa" EntityType="Self.empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="responsable" EntityType="Self.responsable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_eir_container_empresa" Association="Self.FK_eir_container_empresa">
+            <End Role="empresa" EntitySet="empresa" />
+            <End Role="eir_container" EntitySet="eir_container" />
+          </AssociationSet>
+          <AssociationSet Name="FK_eir_container_responsable" Association="Self.FK_eir_container_responsable">
+            <End Role="responsable" EntitySet="responsable" />
+            <End Role="eir_container" EntitySet="eir_container" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MovilModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="eir_container">
+          <Key>
+            <PropertyRef Name="eir" />
+          </Key>
+          <Property Name="eir" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contenedor" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="sello" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="responsable" Type="Int32" />
+          <Property Name="empresa" Type="Int32" />
+          <NavigationProperty Name="empresa1" Relationship="Self.FK_eir_container_empresa" FromRole="eir_container" ToRole="empresa" />
+          <NavigationProperty Name="responsable1" Relationship="Self.FK_eir_container_responsable" FromRole="eir_container" ToRole="responsable" />
+        </EntityType>
+        <EntityType Name="empresa">
+          <Key>
+            <PropertyRef Name="empresa1" />
+          </Key>
+          <Property Name="empresa1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empresa_nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="eir_container" Relationship="Self.FK_eir_container_empresa" FromRole="empresa" ToRole="eir_container" />
+        </EntityType>
+        <EntityType Name="responsable">
+          <Key>
+            <PropertyRef Name="reponsable" />
+          </Key>
+          <Property Name="reponsable" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="responsable_nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="eir_container" Relationship="Self.FK_eir_container_responsable" FromRole="responsable" ToRole="eir_container" />
+        </EntityType>
+        <Association Name="FK_eir_container_empresa">
+          <End Role="empresa" Type="Self.empresa" Multiplicity="0..1" />
+          <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empresa">
+              <PropertyRef Name="empresa1" />
+            </Principal>
+            <Dependent Role="eir_container">
+              <PropertyRef Name="empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_eir_container_responsable">
+          <End Role="responsable" Type="Self.responsable" Multiplicity="0..1" />
+          <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="responsable">
+              <PropertyRef Name="reponsable" />
+            </Principal>
+            <Dependent Role="eir_container">
+              <PropertyRef Name="responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities_movil360" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="eir_container" EntityType="Self.eir_container" />
+          <EntitySet Name="empresas" EntityType="Self.empresa" />
+          <EntitySet Name="responsables" EntityType="Self.responsable" />
+          <AssociationSet Name="FK_eir_container_empresa" Association="Self.FK_eir_container_empresa">
+            <End Role="empresa" EntitySet="empresas" />
+            <End Role="eir_container" EntitySet="eir_container" />
+          </AssociationSet>
+          <AssociationSet Name="FK_eir_container_responsable" Association="Self.FK_eir_container_responsable">
+            <End Role="responsable" EntitySet="responsables" />
+            <End Role="eir_container" EntitySet="eir_container" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MovilModelStoreContainer" CdmEntityContainer="Entities_movil360">
+          <EntitySetMapping Name="eir_container">
+            <EntityTypeMapping TypeName="MovilModel.eir_container">
+              <MappingFragment StoreEntitySet="eir_container">
+                <ScalarProperty Name="eir" ColumnName="eir" />
+                <ScalarProperty Name="contenedor" ColumnName="contenedor" />
+                <ScalarProperty Name="sello" ColumnName="sello" />
+                <ScalarProperty Name="responsable" ColumnName="responsable" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empresas">
+            <EntityTypeMapping TypeName="MovilModel.empresa">
+              <MappingFragment StoreEntitySet="empresa">
+                <ScalarProperty Name="empresa1" ColumnName="empresa" />
+                <ScalarProperty Name="empresa_nombre" ColumnName="empresa_nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="responsables">
+            <EntityTypeMapping TypeName="MovilModel.responsable">
+              <MappingFragment StoreEntitySet="responsable">
+                <ScalarProperty Name="reponsable" ColumnName="reponsable" />
+                <ScalarProperty Name="responsable_nombre" ColumnName="responsable_nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

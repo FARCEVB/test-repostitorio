@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MovilModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="eir_container">
+    <Key>
+      <PropertyRef Name="eir" />
+    </Key>
+    <Property Name="eir" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="contenedor" Type="varchar" MaxLength="20" />
+    <Property Name="sello" Type="varchar" MaxLength="20" />
+    <Property Name="responsable" Type="int" />
+    <Property Name="empresa" Type="int" />
+  </EntityType>
+  <EntityType Name="empresa">
+    <Key>
+      <PropertyRef Name="empresa" />
+    </Key>
+    <Property Name="empresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="empresa_nombre" Type="varchar" MaxLength="80" />
+  </EntityType>
+  <EntityType Name="responsable">
+    <Key>
+      <PropertyRef Name="reponsable" />
+    </Key>
+    <Property Name="reponsable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="responsable_nombre" Type="varchar" MaxLength="80" />
+  </EntityType>
+  <Association Name="FK_eir_container_empresa">
+    <End Role="empresa" Type="Self.empresa" Multiplicity="0..1" />
+    <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="empresa">
+        <PropertyRef Name="empresa" />
+      </Principal>
+      <Dependent Role="eir_container">
+        <PropertyRef Name="empresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_eir_container_responsable">
+    <End Role="responsable" Type="Self.responsable" Multiplicity="0..1" />
+    <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="responsable">
+        <PropertyRef Name="reponsable" />
+      </Principal>
+      <Dependent Role="eir_container">
+        <PropertyRef Name="responsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MovilModelStoreContainer">
+    <EntitySet Name="eir_container" EntityType="Self.eir_container" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="empresa" EntityType="Self.empresa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="responsable" EntityType="Self.responsable" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_eir_container_empresa" Association="Self.FK_eir_container_empresa">
+      <End Role="empresa" EntitySet="empresa" />
+      <End Role="eir_container" EntitySet="eir_container" />
+    </AssociationSet>
+    <AssociationSet Name="FK_eir_container_responsable" Association="Self.FK_eir_container_responsable">
+      <End Role="responsable" EntitySet="responsable" />
+      <End Role="eir_container" EntitySet="eir_container" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

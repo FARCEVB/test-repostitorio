@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MovilModelStoreContainer" CdmEntityContainer="Entities_movil360">
+    <EntitySetMapping Name="eir_container">
+      <EntityTypeMapping TypeName="MovilModel.eir_container">
+        <MappingFragment StoreEntitySet="eir_container">
+          <ScalarProperty Name="eir" ColumnName="eir" />
+          <ScalarProperty Name="contenedor" ColumnName="contenedor" />
+          <ScalarProperty Name="sello" ColumnName="sello" />
+          <ScalarProperty Name="responsable" ColumnName="responsable" />
+          <ScalarProperty Name="empresa" ColumnName="empresa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="empresas">
+      <EntityTypeMapping TypeName="MovilModel.empresa">
+        <MappingFragment StoreEntitySet="empresa">
+          <ScalarProperty Name="empresa1" ColumnName="empresa" />
+          <ScalarProperty Name="empresa_nombre" ColumnName="empresa_nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="responsables">
+      <EntityTypeMapping TypeName="MovilModel.responsable">
+        <MappingFragment StoreEntitySet="responsable">
+          <ScalarProperty Name="reponsable" ColumnName="reponsable" />
+          <ScalarProperty Name="responsable_nombre" ColumnName="responsable_nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

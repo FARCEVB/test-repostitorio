@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MovilModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="eir_container">
+    <Key>
+      <PropertyRef Name="eir" />
+    </Key>
+    <Property Name="eir" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="contenedor" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="sello" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="responsable" Type="Int32" />
+    <Property Name="empresa" Type="Int32" />
+    <NavigationProperty Name="empresa1" Relationship="Self.FK_eir_container_empresa" FromRole="eir_container" ToRole="empresa" />
+    <NavigationProperty Name="responsable1" Relationship="Self.FK_eir_container_responsable" FromRole="eir_container" ToRole="responsable" />
+  </EntityType>
+  <EntityType Name="empresa">
+    <Key>
+      <PropertyRef Name="empresa1" />
+    </Key>
+    <Property Name="empresa1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="empresa_nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="eir_container" Relationship="Self.FK_eir_container_empresa" FromRole="empresa" ToRole="eir_container" />
+  </EntityType>
+  <EntityType Name="responsable">
+    <Key>
+      <PropertyRef Name="reponsable" />
+    </Key>
+    <Property Name="reponsable" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="responsable_nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="eir_container" Relationship="Self.FK_eir_container_responsable" FromRole="responsable" ToRole="eir_container" />
+  </EntityType>
+  <Association Name="FK_eir_container_empresa">
+    <End Role="empresa" Type="Self.empresa" Multiplicity="0..1" />
+    <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="empresa">
+        <PropertyRef Name="empresa1" />
+      </Principal>
+      <Dependent Role="eir_container">
+        <PropertyRef Name="empresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_eir_container_responsable">
+    <End Role="responsable" Type="Self.responsable" Multiplicity="0..1" />
+    <End Role="eir_container" Type="Self.eir_container" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="responsable">
+        <PropertyRef Name="reponsable" />
+      </Principal>
+      <Dependent Role="eir_container">
+        <PropertyRef Name="responsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities_movil360" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="eir_container" EntityType="Self.eir_container" />
+    <EntitySet Name="empresas" EntityType="Self.empresa" />
+    <EntitySet Name="responsables" EntityType="Self.responsable" />
+    <AssociationSet Name="FK_eir_container_empresa" Association="Self.FK_eir_container_empresa">
+      <End Role="empresa" EntitySet="empresas" />
+      <End Role="eir_container" EntitySet="eir_container" />
+    </AssociationSet>
+    <AssociationSet Name="FK_eir_container_responsable" Association="Self.FK_eir_container_responsable">
+      <End Role="responsable" EntitySet="responsables" />
+      <End Role="eir_container" EntitySet="eir_container" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
